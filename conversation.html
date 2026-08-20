@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start a Conversation — MOMENTO Family Legacy Preservation</title>
+    <meta name="description"
+        content="Begin your family legacy preservation journey. Share a few details about your family and storyteller to arrange a quiet, no-pressure introductory conversation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+        <a href="index.html" class="logo-link" aria-label="MOMENTO Home">
+            <img src="assets/logo.jpg" alt="MOMENTO" class="logo-img">
+        </a>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu"
+            aria-expanded="false" aria-controls="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav" id="navMenu" role="navigation" aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="experience.html">The Experience</a>
+            <a href="faq.html">Questions & Trust</a>
+            <a href="watch.html">Private Portal</a>
+            <a href="conversation.html" class="cta-btn active">Start a Conversation</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="page-hero">
+            <span class="badge">Introductory Consultation</span>
+            <h1>Start a Conversation</h1>
+            <p>Every family story is unique. Let us know who you'd like to honor, and we'll arrange a quiet, 15-minute introductory conversation.</p>
+        </section>
+
+        <section class="section" style="padding-top: 3.5rem;">
+            <div class="container">
+                <div class="intake-card">
+                    <div class="intake-header">
+                        <h2>Tell Us About Your Family</h2>
+                        <p>This is not a sales call. It is a gentle conversation about family context, timing, and storyteller comfort.</p>
+                    </div>
+
+                    <form class="intake-form" id="intakeForm">
+                        <!-- Buyer Information -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="buyerName">Your Full Name <span class="required">*</span></label>
+                                <input type="text" id="buyerName" name="buyer_name" placeholder="e.g. Ananya Rao" required autocomplete="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="buyerEmail">Your Email Address <span class="required">*</span></label>
+                                <input type="email" id="buyerEmail" name="buyer_email" placeholder="ananya@example.com" required autocomplete="email">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="buyerPhone">Phone Number <span class="helper-text">(optional)</span></label>
+                                <input type="tel" id="buyerPhone" name="buyer_phone" placeholder="+91 98765 43210" autocomplete="tel">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Storyteller Location / City <span class="required">*</span></label>
+                                <input type="text" id="location" name="location" placeholder="e.g. Hyderabad, Bengaluru, Mumbai" required>
+                                <span class="helper-text">Based in Hyderabad • Travel available across India & abroad</span>
+                            </div>
+                        </div>
+
+                        <!-- Storyteller Information -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="storytellerName">Storyteller's Name <span class="required">*</span></label>
+                                <input type="text" id="storytellerName" name="storyteller_name" placeholder="e.g. K. Ramachandra Rao" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="relationship">Relationship <span class="required">*</span></label>
+                                <select id="relationship" name="relationship" required>
+                                    <option value="" disabled selected>Select Relationship</option>
+                                    <option value="Parent">Parent (Mother / Father)</option>
+                                    <option value="Grandparent">Grandparent (Grandmother / Grandfather)</option>
+                                    <option value="Spouse / Partner">Spouse / Partner</option>
+                                    <option value="Self">Preserving My Own Stories</option>
+                                    <option value="Other Family Member">Other Family Member</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Approximate Timeline -->
+                        <div class="form-group">
+                            <label for="timeline">Approximate Timeline <span class="required">*</span></label>
+                            <select id="timeline" name="timeline" required>
+                                <option value="" disabled selected>When are you hoping to complete this?</option>
+                                <option value="Within 1 month">Within the next month (Milestone / Birthday / Urgent)</option>
+                                <option value="2 to 3 months">Next 2 to 3 months</option>
+                                <option value="Later this year">Later this year / Holiday gathering</option>
+                                <option value="Exploring">Just exploring / Gathering information</option>
+                            </select>
+                        </div>
+
+                        <!-- Story Context / Why Now -->
+                        <div class="form-group">
+                            <label for="reason">Why do you want to preserve their story now? <span class="required">*</span></label>
+                            <textarea id="reason" name="reason" rows="4" placeholder="Tell us briefly about what makes their journey meaningful to your family, any upcoming milestones (birthdays, anniversaries), or specific memories you cherish." required></textarea>
+                        </div>
+
+                        <!-- Hidden Form Configuration -->
+                        <input type="hidden" name="_subject" value="Momento Consultation Request">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+                        <button type="submit" id="intakeSubmitBtn">Request a 15-Minute Introductory Call</button>
+
+                        <div class="cta-microcopy" style="margin-top:0.8rem; text-align:center;">
+                            <strong>No obligation • No payment required • 100% confidential</strong><br>
+                            Investment starts from ₹1,50,000 depending on location and story scope.
+                        </div>
+                    </form>
+
+                    <!-- Status Messages -->
+                    <div class="form-status-box success" id="formSuccess" role="alert">
+                        <strong>Thank you for reaching out.</strong><br>
+                        We have received your family's details. Our Founder / Story Discovery Lead will review your context and reach out personally within 24–48 hours to schedule your introductory conversation.
+                    </div>
+
+                    <div class="form-status-box error" id="formError" role="alert">
+                        <!-- Populated by JS fallback if network fails -->
+                    </div>
+                </div>
+
+                <div class="ethical-callout" style="max-width: 780px; margin: 3rem auto 0;">
+                    <h4>What happens after you reach out?</h4>
+                    <p>
+                        <strong>1. Personal Review:</strong> We read your notes carefully to understand family dynamics.<br>
+                        <strong>2. Introductory Conversation:</strong> A 15-minute phone or video conversation to answer questions, share transparent pricing, and ensure storyteller comfort.<br>
+                        <strong>3. Storyteller Agreement:</strong> We never push forward unless your parent or grandparent feels validated, excited, and safe.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <img src="assets/logo-dark.jpg" alt="MOMENTO" class="footer-logo">
+        <nav class="footer-nav" aria-label="Footer Navigation">
+            <a href="index.html">Home</a>
+            <a href="experience.html">The Experience</a>
+            <a href="faq.html">Questions & Trust</a>
+            <a href="watch.html">Private Portal</a>
+            <a href="conversation.html" class="active">Start a Conversation</a>
+        </nav>
+        <p><strong>MOMENTO</strong></p>
+        <p>Family Legacy Preservation • The film is the medium. The family legacy is the product.</p>
+        <p>Contact: <a href="mailto:hello@momentofilms.com" class="footer-email">hello@momentofilms.com</a></p>
+        <p class="footer-copy">&copy; 2026 MOMENTO. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

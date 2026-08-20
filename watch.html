@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Family Viewing Portal — MOMENTO</title>
+    <meta name="description"
+        content="Private encrypted digital delivery portal for your Momento chaptered family legacy film.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+        <a href="index.html" class="logo-link" aria-label="MOMENTO Home">
+            <img src="assets/logo.jpg" alt="MOMENTO" class="logo-img">
+        </a>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu"
+            aria-expanded="false" aria-controls="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav" id="navMenu" role="navigation" aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="experience.html">The Experience</a>
+            <a href="faq.html">Questions & Trust</a>
+            <a href="watch.html" class="active">Private Portal</a>
+            <a href="conversation.html" class="cta-btn">Start a Conversation</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <div class="portal-container">
+            <!-- 1. Password Gated Access Screen -->
+            <div class="access-gate-card" id="accessGateCard">
+                <span class="badge">Family Viewing Access</span>
+                <h2>Private Legacy Portal</h2>
+                <p>Please enter your family's private access code to view your chaptered legacy film.</p>
+
+                <form class="passcode-form" id="passcodeForm">
+                    <label for="passcodeInput" class="form-label" style="font-size:0.82rem; text-transform:uppercase; letter-spacing:1.2px; font-weight:600; color:var(--text-dark);">Access Passcode</label>
+                    <input type="password" id="passcodeInput" class="passcode-input" placeholder="••••••••" required autocomplete="current-password" autofocus>
+                    <button type="submit" class="passcode-btn">Unlock Family Film</button>
+                </form>
+
+                <div id="gateError" class="form-status-box error" style="display:none; margin-top:1.5rem;"></div>
+
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed rgba(30,26,22,0.12);">
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+                        Exploring Momento for your family?
+                    </p>
+                    <button type="button" id="instantDemoBtn" class="cta-btn" style="background: transparent; color: var(--text-dark); border-color: var(--accent); font-size: 0.76rem; padding: 0.65rem 1.3rem;">
+                        Preview Sample Chapter Experience →
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. Unlocked Chaptered Film Experience -->
+            <div class="viewer-layout" id="viewerLayout" aria-live="polite">
+                <div class="viewer-header">
+                    <div class="viewer-title">
+                        <div class="tts-header-wrap" style="justify-content: flex-start; margin-bottom: 0.4rem;">
+                            <span class="badge">Preserved Family Heirloom</span>
+                            <button type="button" class="tts-btn tts-inline-chip" aria-label="Listen to Film title and metadata" data-tts-target="#viewer-film-info">
+                                <span class="tts-icon" aria-hidden="true">🔊</span> <span>Listen Overview</span>
+                            </button>
+                        </div>
+                        <div id="viewer-film-info">
+                            <h1>The Stories of Ramachandra & Shanti Rao</h1>
+                            <div class="meta">Recorded in Hyderabad, India • Directed by Momento • Runtime: 58 mins</div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="preservation-tag">✓ Master File Preserved & Redundant</span>
+                    </div>
+                </div>
+
+                <!-- Video Screen + Chapter Navigation -->
+                <div class="film-player-wrapper">
+                    <div class="video-screen-container">
+                        <video id="legacyVideoPlayer" controls playsinline
+                            poster="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1200"
+                            aria-label="Ramachandra and Shanti Rao Legacy Film">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                            Your browser does not support HTML5 video playback.
+                        </video>
+                    </div>
+
+                    <!-- Interactive Chapter Sidebar -->
+                    <aside class="chapter-sidebar" aria-label="Film Chapters">
+                        <div class="chapter-sidebar-header">
+                            <span>Chapters</span>
+                            <span style="font-size:0.78rem; font-family:var(--sans); color:var(--text-subtle);">7 Parts</span>
+                        </div>
+
+                        <ul class="chapter-list" role="list">
+                            <li>
+                                <button type="button" class="chapter-item active" data-time="0">
+                                    <span class="ch-title">1. Early Roots & Childhood in Godavari</span>
+                                    <span class="ch-time">00:00</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="chapter-item" data-time="15">
+                                    <span class="ch-title">2. Meeting Shanti & Early Marriage</span>
+                                    <span class="ch-time">08:45</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="chapter-item" data-time="45">
+                                    <span class="ch-title">3. The Hardest Years & Building a Home</span>
+                                    <span class="ch-time">18:20</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="chapter-item" data-time="80">
+                                    <span class="ch-title">4. Family Traditions & Celebrations</span>
+                                    <span class="ch-time">27:10</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="chapter-item" data-time="140">
+                                    <span class="ch-title">5. Defining Crossroads & Decisions</span>
+                                    <span class="ch-time">36:40</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="chapter-item" data-time="220">
+                                    <span class="ch-title">6. Wisdom for Children & Grandchildren</span>
+                                    <span class="ch-time">45:15</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="chapter-item" data-time="300">
+                                    <span class="ch-title">7. What I Want You to Know</span>
+                                    <span class="ch-time">52:30</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+
+                <!-- Archive Preservation Metadata -->
+                <div class="archive-details-strip">
+                    <div class="archive-detail-block">
+                        <h4>100% Family Ownership</h4>
+                        <p>This film is the private property of your family. You may share this link and passcode freely with your relatives.</p>
+                    </div>
+                    <div class="archive-detail-block">
+                        <h4>Permanent Preservation Vault</h4>
+                        <p>Master files (4K Master + 24-bit Studio Sound) are safely stored in redundant digital vaults.</p>
+                    </div>
+                    <div class="archive-detail-block">
+                        <h4>Preserve Another Story</h4>
+                        <p>If your family wishes to preserve another grandparent's story, contact your Momento director.</p>
+                    </div>
+                </div>
+
+                <!-- P3.3 Private Viewing Experience: Legacy Library Mockup (Future Feature UI) -->
+                <div class="legacy-library-preview" aria-label="Future Legacy Library Preview">
+                    <span class="badge badge-future">Future Feature Preview</span>
+                    <h3 style="font-family: var(--serif); font-size: 1.8rem; color: var(--text-dark); margin-bottom: 0.2rem;">
+                        Your Family Legacy Vault
+                    </h3>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);">
+                        Future interface layout preview for multi-generational family libraries: Volume 1 Ramachandra Rao, Volume 2 Shanti Rao, and 50th Anniversary Special Chapter.
+                    </p>
+
+                    <div class="library-grid">
+                        <div class="library-film-card">
+                            <div class="library-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=400" alt="Volume 1 Thumbnail">
+                                <span class="library-runtime-badge">58 mins</span>
+                            </div>
+                            <div class="library-card-content">
+                                <h4>Volume 1: Ramachandra Rao</h4>
+                                <p>Childhood, early career, marriage, and values passed down.</p>
+                            </div>
+                        </div>
+
+                        <div class="library-film-card">
+                            <div class="library-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=80&w=400" alt="Volume 2 Thumbnail">
+                                <span class="library-runtime-badge">62 mins</span>
+                            </div>
+                            <div class="library-card-content">
+                                <h4>Volume 2: Shanti Rao</h4>
+                                <p>Family traditions, motherhood, and recipes for the future.</p>
+                            </div>
+                        </div>
+
+                        <div class="library-film-card">
+                            <div class="library-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=400" alt="Volume 3 Thumbnail">
+                                <span class="library-runtime-badge">45 mins</span>
+                            </div>
+                            <div class="library-card-content">
+                                <h4>50th Anniversary Special Chapter</h4>
+                                <p>Conversations with children & grandchildren celebrating 50 years.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P3.2 Future Chapter Request Card -->
+                <div class="future-chapter-card" style="margin-top: 3.5rem;">
+                    <span class="badge badge-future" style="margin-bottom: 0.6rem;">Future Expansion</span>
+                    <h3>Preserve Additional Family Chapters</h3>
+                    <p>Continue your family's story with milestone reflections, anniversary chapters, or interviews with other elders.</p>
+                    <button type="button" class="placeholder-action-btn" data-placeholder-action="future-chapter">
+                        Request Another Chapter (Future Feature)
+                    </button>
+                </div>
+
+                <div class="cta-wrapper" style="margin-top: 3.5rem; text-align: center;">
+                    <a href="conversation.html" class="hero-cta" style="background:var(--accent); color:var(--text-dark);">
+                        Preserve Another Family Story
+                    </a>
+                    <div class="cta-microcopy">
+                        Book a relaxed 15-minute introductory conversation.<br>
+                        <strong>No obligation • No payment required</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <img src="assets/logo-dark.jpg" alt="MOMENTO" class="footer-logo">
+        <nav class="footer-nav" aria-label="Footer Navigation">
+            <a href="index.html">Home</a>
+            <a href="experience.html">The Experience</a>
+            <a href="faq.html">Questions & Trust</a>
+            <a href="watch.html" class="active">Private Portal</a>
+            <a href="conversation.html">Start a Conversation</a>
+        </nav>
+        <p><strong>MOMENTO</strong></p>
+        <p>Family Legacy Preservation • The film is the medium. The family legacy is the product.</p>
+        <p>Contact: <a href="mailto:hello@momentofilms.com" class="footer-email">hello@momentofilms.com</a></p>
+        <p class="footer-copy">&copy; 2026 MOMENTO. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

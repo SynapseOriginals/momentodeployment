@@ -1,0 +1,19 @@
+[
+  {
+    "id": "inq_1787228221911",
+    "createdAt": "2026-08-20T12:17:01.911351Z",
+    "buyer": {
+      "name": "Ananya Rao",
+      "email": "ananya@example.com",
+      "phone": "+91 98765 43210"
+    },
+    "storyteller": {
+      "name": "K. Ramachandra Rao",
+      "relationship": "Grandparent",
+      "location": "Hyderabad"
+    },
+    "timeline": "Within 1 month",
+    "context": "Preserving 80th birthday memories",
+    "status": "NEW"
+  }
+]
