@@ -1,4 +1,4 @@
-# MOMENTO — Family Legacy Preservation Platform
+# MOMENTO — Family Legacy Preservation
 
 > *"The film is the medium. The family legacy is the product."*
 
@@ -6,91 +6,60 @@ Momento turns a parent's or grandparent's life memories and values into a chapte
 
 ---
 
-## Project Structure (Separated Frontend & Backend)
+## Pure Static Architecture (Zero Backend Required)
+
+The entire website runs as a standalone static application (HTML, CSS, JavaScript, Assets) with zero server setup or backend required:
 
 ```
 momento/
-├── frontend/                     # Standalone Client-Side Application
-│   ├── assets/                   # Logos, favicon, and local editorial images
-│   │   ├── logo.jpg              # Header brand logo
-│   │   ├── logo-dark.jpg         # Dark footer brand logo
-│   │   ├── favicon.png           # Browser icon
-│   │   ├── hero-storyteller.jpg  # Preserving Authentic Voice photo
-│   │   ├── home-conversation.jpg # Comfort of Home photo
-│   │   └── generational-wisdom.jpg# Generational Wisdom photo
-│   ├── index.html                # Streamlined homepage with Quick-Explorer & sample film
-│   ├── experience.html           # 7-stage guided journey, interactive chapters & audio
-│   ├── faq.html                  # Questions & Answers with overview speech
-│   ├── watch.html                # Private viewing portal & legacy library preview
-│   ├── conversation.html         # Consultation intake form
-│   ├── pricing.html              # Canonical redirect
-│   ├── reserve.html              # Canonical redirect
-│   ├── styles.css                # Curated design tokens, responsive grid & typography
-│   └── main.js                   # Client interactions, Web Speech API & player logic
-│
-├── backend/                      # Node.js REST API Backend
-│   ├── server.js                 # API server (Inquiries, Passcodes, Static serving)
-│   ├── package.json              # Backend scripts and dependencies
-│   ├── .env.example              # Environment variables template
-│   └── data/                     # Data storage
-│       └── inquiries.json        # Consultation inquiries store
-│
-├── .vscode/                      # VS Code Debugger configurations
-│   └── launch.json               # Chrome & Node.js debug setups
-│
-├── package.json                  # Root npm orchestration scripts
-├── audit.py                      # Automated full-stack verification script
-└── README.md                     # Documentation
+├── assets/                   # Editorial images, logos, and favicons
+│   ├── logo.jpg              # Header brand logo
+│   ├── logo-dark.jpg         # Dark footer brand logo
+│   ├── favicon.png           # Browser icon
+│   ├── hero-storyteller.jpg  # Preserving Authentic Voice photo
+│   ├── home-conversation.jpg # Comfort of Home photo
+│   └── generational-wisdom.jpg# Generational Wisdom photo
+├── index.html                # Homepage with Quick-Explorer & sample chapter film
+├── experience.html           # 7-stage guided journey & interactive chapter breakdowns
+├── faq.html                  # Questions & Answers with Web Speech audio overview
+├── watch.html                # Private viewing portal & family vault preview
+├── conversation.html         # Instant client-side consultation request form
+├── pricing.html              # Redirect to The Experience
+├── reserve.html              # Redirect to Start a Conversation
+├── styles.css                # Curated design tokens, typography & animations
+├── main.js                   # Client-side interactivity, TTS voice & portal auth
+├── start-momento.bat         # One-click Windows launcher
+├── package.json              # Optional local server scripts
+└── README.md                 # Project documentation
 ```
 
 ---
 
-## Getting Started
+## How to Open and Use Locally
 
-### 1. Run the Unified Full-Stack Server
-To start the backend API server (which automatically serves the frontend at `http://localhost:5000`):
+### Option 1: Direct Browser Launch (Easiest)
+Simply **double-click [`index.html`](file:///c:/Users/Mohmm/.gemini/antigravity/scratch/momento/index.html)** in Windows File Explorer or double-click **[`start-momento.bat`](file:///c:/Users/Mohmm/.gemini/antigravity/scratch/momento/start-momento.bat)**.
+
+### Option 2: Using VS Code Live Server
+Right-click `index.html` in VS Code and select **"Open with Live Server"**.
+
+### Option 3: Using Python Local Server
+```bash
+python -m http.server 8000
+```
+Then visit **http://localhost:8000** in your browser.
+
+### Option 4: Using Node / NPM
 ```bash
 npm start
 ```
-Or directly with Node:
-```bash
-node backend/server.js
-```
-Open **http://localhost:5000** in your browser.
 
 ---
 
-### 2. Run Frontend Independently
-If you wish to run the frontend standalone (e.g. via Python HTTP server or Live Server):
-```bash
-python -m http.server 8080 -d frontend
-```
-Open **http://localhost:8080** in your browser. The frontend includes automatic fallback to handle inquiries gracefully if the backend is not running.
+## Interactive Features (Pure Client-Side)
 
----
-
-### 3. Run Backend API Independently
-```bash
-cd backend
-node --watch server.js
-```
-The REST API will listen on `http://localhost:5000`.
-
----
-
-## REST API Reference
-
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/health` | Server health check and timestamp |
-| `POST` | `/api/consultation` | Submit a family legacy consultation request |
-| `GET` | `/api/consultation` | Retrieve list of recorded family inquiries |
-| `POST` | `/api/auth/validate-passcode` | Verify private family legacy viewing portal passcode |
-
----
-
-## Verification & Testing
-Run the automated test suite to audit all frontend routes, assets, voice buttons, and backend APIs:
-```bash
-python audit.py
-```
+1. **Quick-Explorer Tabs (`index.html`)**: Fast switching between Discovery, Filming, Crafting, and Archiving.
+2. **Text-to-Speech Engine**: Web Speech API audio narration for key sections with concurrent playback management.
+3. **Embedded Sample Film Player**: Interactive chapter jumping with real-time quote synchronization.
+4. **Instant Intake Form (`conversation.html`)**: Submits immediately with clean on-screen confirmation and optional cloud fallback.
+5. **Private Portal Auth (`watch.html`)**: In-memory passcode validation (`MOMENTO2026`, `LEGACY`, `MOMENTO`, `RAOFAMILY`, or any code $\ge 4$ chars).

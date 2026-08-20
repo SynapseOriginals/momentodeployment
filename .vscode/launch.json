@@ -4,18 +4,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against Momento Server",
-            "url": "http://localhost:5000",
-            "webRoot": "${workspaceFolder}/frontend"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Momento Backend Server",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/backend/server.js"
+            "name": "Launch Momento in Chrome",
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }

@@ -1,17 +1,16 @@
 {
-  "name": "momento-app",
+  "name": "momento",
   "version": "1.0.0",
-  "description": "Momento — Family Legacy Preservation Web Application (Frontend & Backend)",
+  "description": "MOMENTO — Family Legacy Preservation Static Website",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev:backend": "node --watch backend/server.js",
-    "dev:frontend": "python -m http.server 8080 -d frontend",
-    "test": "python audit.py"
+    "start": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "test": "node audit.js"
   },
   "keywords": [
     "momento",
     "legacy-preservation",
-    "fullstack"
+    "static-site"
   ],
   "author": "Momento Team",
   "license": "ISC"

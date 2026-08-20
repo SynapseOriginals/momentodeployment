@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 MOMENTO — Python Backend API Server
-Lightweight REST API Server for Consultation Requests, Passcode Auth & Static Serving
+Resilient REST API Server for Consultation Requests, Passcode Auth & Static Serving
 Zero third-party dependencies required (pure standard library).
+Features automatic port fallback, CORS, and dual-directory frontend resolution.
 """
 
 import http.server
@@ -11,12 +12,13 @@ import json
 import os
 import sys
 import mimetypes
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, unquote
 from datetime import datetime, timezone
 
-PORT = int(os.environ.get('PORT', 5000))
+DEFAULT_PORT = int(os.environ.get('PORT', 5000))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
+ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, '..'))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 INQUIRIES_FILE = os.path.join(DATA_DIR, 'inquiries.json')
 
@@ -28,16 +30,33 @@ if not os.path.exists(INQUIRIES_FILE):
 
 VALID_PASSWORDS = ['MOMENTO2026', 'LEGACY', 'MOMENTO', 'RAOFAMILY']
 
-class MomentoRequestHandler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=FRONTEND_DIR, **kwargs)
+def find_file(path_str):
+    clean = path_str.lstrip('/')
+    if not clean or clean == '/':
+        clean = 'index.html'
+    clean = clean.split('?')[0].split('#')[0]
 
+    candidates = [clean]
+    if not os.path.splitext(clean)[1]:
+        candidates.append(clean + '.html')
+        candidates.append(os.path.join(clean, 'index.html'))
+
+    for bdir in [FRONTEND_DIR, ROOT_DIR]:
+        if not os.path.isdir(bdir):
+            continue
+        for cand in candidates:
+            target = os.path.abspath(os.path.join(bdir, cand))
+            if target.startswith(bdir) and os.path.isfile(target):
+                return target
+    return None
+
+class MomentoRequestHandler(http.server.BaseHTTPRequestHandler):
     def _set_headers(self, status=200, content_type='application/json'):
         self.send_response(status)
-        self.send_header('Content-Type', f'{content_type}; charset=utf-8')
+        self.send_header('Content-Type', f'{content_type}; charset=utf-8' if 'text' in content_type or 'json' in content_type else content_type)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, HEAD')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, X-Requested-With')
         self.end_headers()
 
     def do_OPTIONS(self):
@@ -51,20 +70,19 @@ class MomentoRequestHandler(http.server.SimpleHTTPRequestHandler):
         try:
             return json.loads(body)
         except Exception:
-            # Fallback parse form data
             parsed = parse_qs(body)
             return {k: v[0] if len(v) == 1 else v for k, v in parsed.items()}
 
     def do_GET(self):
         parsed = urlparse(self.path)
-        path = parsed.path
+        path = unquote(parsed.path)
 
         # 1. Health Check
         if path == '/api/health':
             self._set_headers(200)
             res = {
                 'status': 'ok',
-                'service': 'Momento Family Legacy API',
+                'service': 'MOMENTO Family Legacy Preservation API (Python)',
                 'version': '1.0.0',
                 'timestamp': datetime.now(timezone.utc).isoformat()
             }
@@ -88,11 +106,21 @@ class MomentoRequestHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         # 3. Serve Frontend Static Files
-        super().do_GET()
+        target_file = find_file(path)
+        if target_file and os.path.isfile(target_file):
+            ctype, _ = mimetypes.guess_type(target_file)
+            if not ctype:
+                ctype = 'application/octet-stream'
+            self._set_headers(200, content_type=ctype)
+            with open(target_file, 'rb') as f:
+                self.wfile.write(f.read())
+        else:
+            self._set_headers(404, content_type='text/html')
+            self.wfile.write(b"<h1>404 Not Found</h1><p><a href='/'>Return to Home</a></p>")
 
     def do_POST(self):
         parsed = urlparse(self.path)
-        path = parsed.path
+        path = unquote(parsed.path)
 
         # 1. Submit Consultation Request
         if path == '/api/consultation':
@@ -140,7 +168,7 @@ class MomentoRequestHandler(http.server.SimpleHTTPRequestHandler):
                 with open(INQUIRIES_FILE, 'w', encoding='utf-8') as f:
                     json.dump(inquiries, f, indent=2)
 
-                print(f"[Momento API] New Consultation Inbound: {buyer_name} for {storyteller_name}")
+                print(f"[MOMENTO API] New Consultation Inbound: {buyer_name} for {storyteller_name}")
 
                 self._set_headers(201)
                 res = {
@@ -189,19 +217,27 @@ class MomentoRequestHandler(http.server.SimpleHTTPRequestHandler):
         self._set_headers(404)
         self.wfile.write(json.dumps({'error': 'Endpoint not found'}).encode('utf-8'))
 
-def run_server(port=PORT):
+def run_server(start_port=DEFAULT_PORT):
     socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", port), MomentoRequestHandler) as httpd:
-        print(f"====================================================")
-        print(f"  MOMENTO Full-Stack Server Running")
-        print(f"  - Local URL:   http://localhost:{port}")
-        print(f"  - API Health:  http://localhost:{port}/api/health")
-        print(f"  - Frontend:    {FRONTEND_DIR}")
-        print(f"====================================================")
+    ports_to_try = [start_port, 5001, 3000, 8080, 8000, 5050]
+    
+    for port in ports_to_try:
         try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("\nShutting down server.")
+            httpd = socketserver.TCPServer(("0.0.0.0", port), MomentoRequestHandler)
+            print(f"====================================================")
+            print(f"  MOMENTO Full-Stack Server Running (Python)")
+            print(f"  ➜ Local URL:   http://localhost:{port}")
+            print(f"  ➜ Network IP:  http://127.0.0.1:{port}")
+            print(f"  ➜ API Health:  http://localhost:{port}/api/health")
+            print(f"  ➜ Frontend:    {FRONTEND_DIR}")
+            print(f"====================================================")
+            try:
+                httpd.serve_forever()
+            except KeyboardInterrupt:
+                print("\nShutting down server.")
+            return
+        except OSError as e:
+            print(f"[MOMENTO] Port {port} is busy ({e}), trying next...")
 
 if __name__ == '__main__':
-    run_server(PORT)
+    run_server(DEFAULT_PORT)
